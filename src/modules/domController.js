@@ -8,11 +8,13 @@ import {
 const searchForm = document.querySelector(".search-form");
 const weatherDisplay = document.querySelector(".weather-display");
 const statusMessage = document.querySelector(".status-message");
+const unitBtn = document.querySelector(".unit-toggle");
 
 function renderWeather(weatherData) {
+  const unit = getCurrentUnit();
   weatherDisplay.innerHTML = `
     <p class="location">Location: ${weatherData.location}</p>
-    <p class="temperature">Temperature: ${weatherData.tempF}°${getCurrentUnit === "F" ? "F" : "C"}</p>
+    <p class="temperature">Temperature: ${unit === "F" ? weatherData.tempF : weatherData.tempC}°${unit === "F" ? "F" : "C"}</p>
     <p class="condition">Condition: ${weatherData.condition}</p>
     <p class="description">Description: ${weatherData.description}</p>
     <p class="humidity">Humidity: ${weatherData.humidity}%</p>
@@ -22,6 +24,8 @@ function renderWeather(weatherData) {
 
 export function initDOMEvents() {
   searchForm.addEventListener("submit", handleSearch);
+  unitBtn.addEventListener("click", handleUnitBtnClick);
+  renderUnitToggle();
 }
 
 async function handleSearch(e) {
@@ -47,6 +51,15 @@ async function handleSearch(e) {
   }
 }
 
+function handleUnitBtnClick() {
+  toggleUnit();
+  renderUnitToggle();
+  const curWeather = getCurrentWeather();
+  if (curWeather) {
+    renderWeather(curWeather);
+  }
+}
+
 function renderLoading() {
   statusMessage.textContent = "Loading weather...";
 }
@@ -57,4 +70,8 @@ function renderError(errorMsg) {
 
 function clearStatus() {
   statusMessage.textContent = "";
+}
+
+function renderUnitToggle() {
+  unitBtn.textContent = getCurrentUnit() === "F" ? "Show °C" : "Show °F";
 }
