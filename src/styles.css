@@ -1,3 +1,37 @@
 body {
   background-color: lightblue;
 }
+
+/* Theme Classes */
+
+.weather-default {
+  background-color: white;
+}
+
+.weather-clear {
+  background-color: lightblue;
+}
+
+.weather-cloudy {
+  background-color: gray;
+}
+
+.weather-rainy {
+  background-color: cornflowerblue;
+}
+
+.weather-snowy {
+  background-color: gainsboro;
+}
+
+.weather-foggy {
+  background-color: coral;
+}
+
+.weather-stormy {
+  background-color: goldenrod;
+}
+
+.weather-windy {
+  background-color: brown;
+}
