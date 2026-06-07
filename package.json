@@ -1,0 +1,39 @@
+{
+  "name": "weather",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack serve --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js",
+    "lint": "eslint src",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bsul24/weather.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/bsul24/weather/issues"
+  },
+  "homepage": "https://github.com/bsul24/weather#readme",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "css-loader": "^7.1.4",
+    "eslint": "^10.4.1",
+    "globals": "^17.6.0",
+    "html-webpack-plugin": "^5.6.7",
+    "prettier": "3.8.3",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.107.2",
+    "webpack-cli": "^7.0.3",
+    "webpack-dev-server": "^5.2.4",
+    "webpack-merge": "^6.0.1"
+  }
+}
