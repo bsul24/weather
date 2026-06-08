@@ -96,10 +96,8 @@ npm run format:check
 
 ## Live Demo
 
-Add your live demo link here after deployment:
-
 ```txt
-https://your-username.github.io/weather/
+https://weather-bsul24.netlify.app/
 ```
 
 ## Acknowledgments
