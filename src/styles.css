@@ -88,6 +88,15 @@ button:active {
   transform: translateY(1px);
 }
 
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button:disabled:hover {
+  background-color: #172033;
+}
+
 .unit-toggle {
   min-width: 90px;
 }
@@ -173,6 +182,22 @@ button:active {
 .forecast-card-high-temp,
 .forecast-card-low-temp {
   font-weight: 600;
+}
+
+.weather-icon {
+  width: 96px;
+  height: 96px;
+}
+
+.forecast-icon {
+  width: 48px;
+  height: 48px;
+  align-self: center;
+}
+
+.forecast-card {
+  align-items: center;
+  text-align: center;
 }
 
 /* Theme Classes */

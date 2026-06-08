@@ -4,6 +4,7 @@ import {
   getCurrentUnit,
   toggleUnit,
 } from "./appController.js";
+import { getWeatherIcon } from "./weatherIcons.js";
 
 const searchForm = document.querySelector(".search-form");
 const weatherDisplay = document.querySelector(".weather-display");
@@ -24,9 +25,12 @@ const weatherThemes = [
 
 function renderWeather(weatherData) {
   const unit = getCurrentUnit();
+  const iconSource = getWeatherIcon(weatherData.icon);
   weatherDisplay.innerHTML = `
+    <img class="weather-icon" src="${iconSource}" alt="${weatherData.condition}" />
     <p class="location">Location: ${weatherData.location}</p>
     <p class="temperature">Temperature: ${unit === "F" ? weatherData.tempF : weatherData.tempC}°${unit === "F" ? "F" : "C"}</p>
+    <p class="feels-like-temperature">Feels Like: ${unit === "F" ? weatherData.feelsLikeF : weatherData.feelsLikeC}°${unit === "F" ? "F" : "C"}</p>
     <p class="condition">Condition: ${weatherData.condition}</p>
     <p class="description">Description: ${weatherData.description}</p>
     <p class="humidity">Humidity: ${weatherData.humidity}%</p>
@@ -42,9 +46,11 @@ function renderForecast(forecast) {
   const unit = getCurrentUnit();
   let html = `<h2>Forecast</h2>`;
   forecast.forEach((day) => {
+    const iconSource = getWeatherIcon(day.icon);
     html += `
       <div class="forecast-card">
-        <p class="forecast-card-date">Date: ${day.date}</p>
+        <img class="forecast-icon" src="${iconSource}" alt="${day.condition}" />
+        <p class="forecast-card-date">${day.displayDate}</p>
         <p class="forecast-card-condition">Conditions: ${day.condition}</p>
         <p class="forecast-card-high-temp">High Temp: ${unit === "F" ? day.tempMaxF : day.tempMaxC}°${unit === "F" ? "F" : "C"}</p>
         <p class="forecast-card-low-temp">Low Temp: ${unit === "F" ? day.tempMinF : day.tempMinC}°${unit === "F" ? "F" : "C"}</p>
@@ -63,14 +69,15 @@ export function initDOMEvents() {
 
 async function handleSearch(e) {
   e.preventDefault();
+  const formData = new FormData(searchForm);
+  const searchValue = formData.get("location").trim();
+  if (!searchValue) {
+    clearStatus();
+    renderError("Please enter a location.");
+    return;
+  }
+
   try {
-    const formData = new FormData(searchForm);
-    const searchValue = formData.get("location").trim();
-    if (!searchValue) {
-      clearStatus();
-      renderError("Please enter a location.");
-      return;
-    }
     clearStatus();
     renderLoading();
     disableSubmitBtn();
@@ -91,10 +98,12 @@ async function handleSearch(e) {
 
 function disableSubmitBtn() {
   submitBtn.disabled = true;
+  submitBtn.textContent = "Searching...";
 }
 
 function enableSubmitBtn() {
   submitBtn.disabled = false;
+  submitBtn.textContent = "Search";
 }
 
 function handleUnitBtnClick() {
