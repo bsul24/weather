@@ -96,9 +96,7 @@ npm run format:check
 
 ## Live Demo
 
-```txt
-https://weather-bsul24.netlify.app/
-```
+[View the live app](https://weather-bsul24.netlify.app/)
 
 ## Acknowledgments
 
