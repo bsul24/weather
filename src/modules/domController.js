@@ -17,18 +17,45 @@ const unitBtn = document.querySelector(".unit-toggle");
 function renderWeather(weatherData) {
   const unit = getCurrentUnit();
   const iconSource = getWeatherIcon(weatherData.icon);
+  const temp = unit === "F" ? weatherData.tempF : weatherData.tempC;
+  const feelsLike =
+    unit === "F" ? weatherData.feelsLikeF : weatherData.feelsLikeC;
+
   weatherDisplay.innerHTML = `
-    <img class="weather-icon" src="${iconSource}" alt="${weatherData.condition}" />
-    <p class="location">Location: ${weatherData.location}</p>
-    <p class="temperature">Temperature: ${unit === "F" ? weatherData.tempF : weatherData.tempC}°${unit === "F" ? "F" : "C"}</p>
-    <p class="feels-like-temperature">Feels Like: ${unit === "F" ? weatherData.feelsLikeF : weatherData.feelsLikeC}°${unit === "F" ? "F" : "C"}</p>
-    <p class="condition">Condition: ${weatherData.condition}</p>
-    <p class="description">Description: ${weatherData.description}</p>
-    <p class="sunrise">Sunrise: ${weatherData.sunrise}</p>
-    <p class="sunset">Sunset: ${weatherData.sunset}</p>
-    <p class="uv-index">UV Index: ${weatherData.uvIndex}</p>
-    <p class="humidity">Humidity: ${weatherData.humidity}%</p>
-    <p class="wind-speed">Wind Speed: ${weatherData.windSpeed} mph</p>
+    <div class="current-weather-main">
+      <img class="weather-icon" src="${iconSource}" alt="${weatherData.condition}" />
+      <div>
+        <p class="location">${weatherData.location}</p>
+        <p class="temperature">${temp}°${unit}</p>
+        <p class="condition">${weatherData.condition}</p>
+        <p class="feels-like-temperature">Feels like ${feelsLike}°${unit}</p>
+      </div>
+    </div>
+
+    <p class="description">${weatherData.description}</p>
+
+    <div class="weather-details">
+      <div class="weather-detail">
+        <span class="detail-label">Humidity</span>
+        <span class="detail-value">${weatherData.humidity}%</span>
+      </div>
+      <div class="weather-detail">
+        <span class="detail-label">Wind</span>
+        <span class="detail-value">${weatherData.windSpeed} mph</span>
+      </div>
+      <div class="weather-detail">
+        <span class="detail-label">UV Index</span>
+        <span class="detail-value">${weatherData.uvIndex}</span>
+      </div>
+      <div class="weather-detail">
+        <span class="detail-label">Sunrise</span>
+        <span class="detail-value">${weatherData.sunrise}</span>
+      </div>
+      <div class="weather-detail">
+        <span class="detail-label">Sunset</span>
+        <span class="detail-value">${weatherData.sunset}</span>
+      </div>
+    </div>
   `;
 }
 
@@ -43,11 +70,13 @@ function renderForecast(forecast) {
     const iconSource = getWeatherIcon(day.icon);
     html += `
       <div class="forecast-card">
-        <img class="forecast-icon" src="${iconSource}" alt="${day.condition}" />
         <p class="forecast-card-date">${day.displayDate}</p>
-        <p class="forecast-card-condition">Conditions: ${day.condition}</p>
-        <p class="forecast-card-high-temp">High Temp: ${unit === "F" ? day.tempMaxF : day.tempMaxC}°${unit === "F" ? "F" : "C"}</p>
-        <p class="forecast-card-low-temp">Low Temp: ${unit === "F" ? day.tempMinF : day.tempMinC}°${unit === "F" ? "F" : "C"}</p>
+        <img class="forecast-icon" src="${iconSource}" alt="${day.condition}" />
+        <p class="forecast-card-condition">${day.condition}</p>
+        <div class="forecast-temps">
+          <span>High ${unit === "F" ? day.tempMaxF : day.tempMaxC}°${unit}</span>
+          <span>Low ${unit === "F" ? day.tempMinF : day.tempMinC}°${unit}</span>
+        </div>
       </div>
     `;
   });
@@ -112,14 +141,19 @@ function handleUnitBtnClick() {
 
 function renderLoading() {
   statusMessage.textContent = "Loading weather...";
+  statusMessage.classList.remove("status-error");
+  statusMessage.classList.add("status-loading");
 }
 
 function renderError(errorMsg) {
   statusMessage.textContent = errorMsg;
+  statusMessage.classList.remove("status-loading");
+  statusMessage.classList.add("status-error");
 }
 
 function clearStatus() {
   statusMessage.textContent = "";
+  statusMessage.classList.remove("status-loading", "status-error");
 }
 
 function renderUnitToggle() {

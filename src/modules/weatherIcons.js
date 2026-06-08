@@ -20,8 +20,14 @@ const weatherIcons = {
   snow: snowIcon,
   "thunder-rain": thunderRainIcon,
   wind: windIcon,
+  "showers-day": rainIcon,
+  "showers-night": rainIcon,
+  "snow-showers-day": snowIcon,
+  "snow-showers-night": snowIcon,
+  "thunder-showers-day": thunderRainIcon,
+  "thunder-showers-night": thunderRainIcon,
 };
 
 export function getWeatherIcon(iconName) {
-  return weatherIcons[iconName] || weatherIcons["clear-day"];
+  return weatherIcons[iconName] || weatherIcons.cloudy;
 }
