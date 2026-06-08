@@ -9,6 +9,7 @@ const searchForm = document.querySelector(".search-form");
 const weatherDisplay = document.querySelector(".weather-display");
 const forecastDisplay = document.querySelector(".forecast-display");
 const statusMessage = document.querySelector(".status-message");
+const submitBtn = document.querySelector(".submit-btn");
 const unitBtn = document.querySelector(".unit-toggle");
 const weatherThemes = [
   "weather-cloudy",
@@ -72,6 +73,7 @@ async function handleSearch(e) {
     }
     clearStatus();
     renderLoading();
+    disableSubmitBtn();
     searchForm.reset();
     const weatherData = await searchWeather(searchValue);
     renderWeather(weatherData);
@@ -82,7 +84,17 @@ async function handleSearch(e) {
     clearStatus();
     console.error(err);
     renderError("Could not find weather data for that location.");
+  } finally {
+    enableSubmitBtn();
   }
+}
+
+function disableSubmitBtn() {
+  submitBtn.disabled = true;
+}
+
+function enableSubmitBtn() {
+  submitBtn.disabled = false;
 }
 
 function handleUnitBtnClick() {

@@ -1,6 +1,9 @@
 export function processWeatherData(rawData) {
   return {
-    location: rawData.resolvedAddress,
+    location: rawData.resolvedAddress
+      .split(" ")
+      .map((word) => word[0].toUpperCase() + word.slice(1))
+      .join(" "),
     tempF: rawData.currentConditions.temp,
     tempC: fahrenheitToCelsius(rawData.currentConditions.temp),
     feelsLikeF: rawData.currentConditions.feelslike,
