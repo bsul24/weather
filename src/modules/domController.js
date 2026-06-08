@@ -5,6 +5,7 @@ import {
   toggleUnit,
 } from "./appController.js";
 import { getWeatherIcon } from "./weatherIcons.js";
+import { applyWeatherTheme } from "./weatherTheme.js";
 
 const searchForm = document.querySelector(".search-form");
 const weatherDisplay = document.querySelector(".weather-display");
@@ -12,16 +13,6 @@ const forecastDisplay = document.querySelector(".forecast-display");
 const statusMessage = document.querySelector(".status-message");
 const submitBtn = document.querySelector(".submit-btn");
 const unitBtn = document.querySelector(".unit-toggle");
-const weatherThemes = [
-  "weather-cloudy",
-  "weather-clear",
-  "weather-rainy",
-  "weather-snowy",
-  "weather-foggy",
-  "weather-stormy",
-  "weather-windy",
-  "weather-default",
-];
 
 function renderWeather(weatherData) {
   const unit = getCurrentUnit();
@@ -33,6 +24,9 @@ function renderWeather(weatherData) {
     <p class="feels-like-temperature">Feels Like: ${unit === "F" ? weatherData.feelsLikeF : weatherData.feelsLikeC}°${unit === "F" ? "F" : "C"}</p>
     <p class="condition">Condition: ${weatherData.condition}</p>
     <p class="description">Description: ${weatherData.description}</p>
+    <p class="sunrise">Sunrise: ${weatherData.sunrise}</p>
+    <p class="sunset">Sunset: ${weatherData.sunset}</p>
+    <p class="uv-index">UV Index: ${weatherData.uvIndex}</p>
     <p class="humidity">Humidity: ${weatherData.humidity}%</p>
     <p class="wind-speed">Wind Speed: ${weatherData.windSpeed} mph</p>
   `;
@@ -130,41 +124,4 @@ function clearStatus() {
 
 function renderUnitToggle() {
   unitBtn.textContent = getCurrentUnit() === "F" ? "Show °C" : "Show °F";
-}
-
-function getWeatherTheme(icon) {
-  if (!icon) {
-    return "weather-default";
-  }
-  if (icon.includes("storm") || icon.includes("thunder")) {
-    return "weather-stormy";
-  }
-  if (icon.includes("snow")) {
-    return "weather-snowy";
-  }
-  if (icon.includes("rain") || icon.includes("shower")) {
-    return "weather-rainy";
-  }
-  if (icon.includes("fog")) {
-    return "weather-foggy";
-  }
-  if (icon.includes("wind")) {
-    return "weather-windy";
-  }
-  if (icon.includes("cloudy")) {
-    return "weather-cloudy";
-  }
-  if (icon.includes("clear")) {
-    return "weather-clear";
-  }
-  return "weather-default";
-}
-
-function applyWeatherTheme(weatherData) {
-  weatherThemes.forEach((theme) => document.body.classList.remove(theme));
-  if (weatherData) {
-    document.body.classList.add(getWeatherTheme(weatherData.icon));
-  } else {
-    document.body.classList.add("weather-default");
-  }
 }

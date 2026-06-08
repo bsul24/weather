@@ -5,6 +5,9 @@ export function processWeatherData(rawData) {
     tempC: fahrenheitToCelsius(rawData.currentConditions.temp),
     feelsLikeF: rawData.currentConditions.feelslike,
     feelsLikeC: fahrenheitToCelsius(rawData.currentConditions.feelslike),
+    sunrise: formatTime(rawData.currentConditions.sunrise),
+    sunset: formatTime(rawData.currentConditions.sunset),
+    uvIndex: rawData.currentConditions.uvindex ?? "N/A",
     condition: rawData.currentConditions.conditions,
     description: rawData.description,
     humidity: rawData.currentConditions.humidity,
@@ -33,6 +36,26 @@ function formatDate(dateString) {
   });
 
   return formatter.format(date);
+}
+
+function formatTime(timeString) {
+  if (!timeString) {
+    return "";
+  }
+
+  let isPM = false;
+  const timeParts = timeString.split(":").slice(0, 2);
+  timeParts[0] = Number(timeParts[0]);
+  if (timeParts[0] >= 12) {
+    isPM = true;
+  }
+  if (timeParts[0] > 12) {
+    timeParts[0] -= 12;
+  }
+  if (timeParts[0] === 0) {
+    timeParts[0] = 12;
+  }
+  return `${timeParts.join(":")} ${isPM ? "PM" : "AM"}`;
 }
 
 function buildForecastArray(days) {
