@@ -1,6 +1,6 @@
 # Weather App
 
-A responsive weather forecast app built for The Odin Project. Users can search for a location, view current weather conditions, see a 7-day forecast, and toggle temperatures between Fahrenheit and Celsius.
+A responsive weather forecast app built with JavaScript, Webpack, and the Visual Crossing Weather API as part of The Odin Project curriculum. Users can search for a location, view current weather conditions, see a 7-day forecast, and toggle temperatures between Fahrenheit and Celsius.
 
 The app uses the Visual Crossing Weather API and updates the page theme and weather icons based on the returned conditions.
 
@@ -9,7 +9,7 @@ The app uses the Visual Crossing Weather API and updates the page theme and weat
 - Search weather by location
 - View current weather and a 7-day forecast
 - Toggle between Fahrenheit and Celsius
-- Display real SVG weather icons
+- Display SVG weather icons
 - Change the page theme based on weather conditions
 - Show loading and error states
 - Display feels-like temperature, humidity, wind speed, UV index, sunrise, and sunset
